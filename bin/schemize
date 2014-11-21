@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'schemize'
+
+Schemize::CLI.start
