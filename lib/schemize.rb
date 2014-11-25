@@ -22,11 +22,24 @@ module Schemize
     def schemize(obj)
       case obj
       when Array
-        obj.map {|o| schemize(o) }
+        {
+          'items' => {
+            'type' => 'array',
+            'properties' => schemize(obj.first)
+          }
+        }
       when Hash
-        obj.inject({}) {|h, (k, v)|
-          h[k] = schemize(v)
-          h
+        {
+          'items' => {
+            'type' => 'object',
+            'properties' => obj.inject({}) {|h, (k, v)|
+              h[k] = {
+                'description' => k,
+                'type' => schemize(v)
+              }
+              h
+            }
+          }
         }
       else
         detect_type(obj)
@@ -39,8 +52,10 @@ module Schemize
         'string'
       when Numeric
         'integer'
+      when nil
+        nil
       else
-        'unknown'
+        'object'
       end
     end
   end
