@@ -10,41 +10,36 @@ module Schemize
 
     desc 'convert', 'convert JSON to JSON Schema from STDIN'
     def convert
-      puts schemize(JSON.parse(STDIN.read)).to_yaml
-    end
+      hash = {
+        'schema' => schemize(JSON.parse(STDIN.read))
+      }
 
-    private
-
-    def stdin
-      STDIN.read
+      puts hash.to_yaml
     end
 
     def schemize(obj)
       case obj
       when Array
         {
-          'items' => {
-            'type' => 'array',
-            'properties' => schemize(obj.first)
-          }
+          'type' => 'array',
+          'properties' => schemize(obj.first)
         }
       when Hash
         {
-          'items' => {
-            'type' => 'object',
-            'properties' => obj.inject({}) {|h, (k, v)|
-              h[k] = {
-                'description' => k,
-                'type' => schemize(v)
-              }
-              h
+          'type' => 'object',
+          'properties' => obj.inject({}) {|h, (k, v)|
+            h[k] = {
+              'type' => schemize(v)
             }
+            h
           }
         }
       else
         detect_type(obj)
       end
     end
+
+    private
 
     def detect_type(value)
       case value
