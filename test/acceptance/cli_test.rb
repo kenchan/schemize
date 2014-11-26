@@ -6,7 +6,7 @@ class CliTest < Test::Unit::TestCase
     @cli =  Schemize::CLI.new
   end
 
-  def test_simpole_object_json
+  def test_simple_json_object
     json = JSON.parse(<<-JSON)
       {
         "firstName": "Taro",
@@ -35,7 +35,7 @@ class CliTest < Test::Unit::TestCase
     assert { @cli.schemize(json) == schema }
   end
 
-  def test_simpole_array_json
+  def test_simpole_json_array
     json = JSON.parse(<<-JSON)
       [
         {
@@ -74,7 +74,7 @@ class CliTest < Test::Unit::TestCase
     assert { @cli.schemize(json) == schema }
   end
 
-  def test_complex_object_json
+  def test_complex_json_object
     json = JSON.parse(<<-JSON)
       {
         "users": [
