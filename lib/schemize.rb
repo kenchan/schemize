@@ -22,7 +22,7 @@ module Schemize
       when Array
         {
           'type' => 'array',
-          'properties' => schemize(obj.first)
+          'items' => schemize(obj.first)
         }
       when Hash
         {

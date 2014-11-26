@@ -34,4 +34,43 @@ class CliTest < Test::Unit::TestCase
 
     assert { @cli.schemize(json) == schema }
   end
+
+  def test_simpole_array_json
+    json = JSON.parse(<<-JSON)
+      [
+        {
+          "firstName": "Taro",
+          "lastName":  "YAMADA",
+          "age": 30
+        },
+        {
+          "firstName": "Hanako",
+          "lastName":  "YAMADA",
+          "age": 30
+        }
+      ]
+    JSON
+
+    schema = JSON.parse(<<-SCHEMA)
+      {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "firstName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "age": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    SCHEMA
+
+    assert { @cli.schemize(json) == schema }
+  end
 end
