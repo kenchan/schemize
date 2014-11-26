@@ -73,4 +73,57 @@ class CliTest < Test::Unit::TestCase
 
     assert { @cli.schemize(json) == schema }
   end
+
+  def test_complex_object_json
+    json = JSON.parse(<<-JSON)
+      {
+        "users": [
+          {
+            "firstName": "Taro",
+            "lastName":  "YAMADA",
+            "friend_ids": [2, 3]
+          },
+          {
+            "firstName": "Hanako",
+            "lastName":  "YAMADA",
+            "age": 23,
+            "friend_ids": [2, 3]
+          }
+        ]
+      }
+    JSON
+
+    schema = JSON.parse(<<-SCHEMA)
+      {
+        "type": "object",
+        "properties": {
+          "users": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "age": {
+                  "type": "integer"
+                },
+                "friend_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    SCHEMA
+
+    assert { @cli.schemize(json) == schema }
+  end
 end

@@ -22,20 +22,18 @@ module Schemize
       when Array
         {
           'type' => 'array',
-          'items' => schemize(obj.first)
+          'items' => obj.inject({}) {|h, i| h.merge(schemize(i)) }
         }
       when Hash
         {
           'type' => 'object',
           'properties' => obj.inject({}) {|h, (k, v)|
-            h[k] = {
-              'type' => schemize(v)
-            }
+            h[k] = schemize(v)
             h
           }
         }
       else
-        detect_type(obj)
+        {'type' => detect_type(obj)}
       end
     end
 
