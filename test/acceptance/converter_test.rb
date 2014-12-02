@@ -1,9 +1,10 @@
 require 'test/unit'
 require 'schemize'
+require 'json'
 
-class CliTest < Test::Unit::TestCase
+class ConverterTest < Test::Unit::TestCase
   def setup
-    @cli =  Schemize::CLI.new
+    @converter =  Schemize::Converter.new
   end
 
   def test_simple_json_object
@@ -32,7 +33,7 @@ class CliTest < Test::Unit::TestCase
       }
     SCHEMA
 
-    assert { @cli.schemize(json) == schema }
+    assert { @converter.perform(json) == schema }
   end
 
   def test_simpole_json_array
@@ -71,7 +72,7 @@ class CliTest < Test::Unit::TestCase
       }
     SCHEMA
 
-    assert { @cli.schemize(json) == schema }
+    assert { @converter.perform(json) == schema }
   end
 
   def test_complex_json_object
@@ -124,6 +125,6 @@ class CliTest < Test::Unit::TestCase
       }
     SCHEMA
 
-    assert { @cli.schemize(json) == schema }
+    assert { @converter.perform(json) == schema }
   end
 end
