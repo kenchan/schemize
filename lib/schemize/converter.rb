@@ -30,7 +30,7 @@ module Schemize
       when Numeric
         'integer'
       when nil
-        nil
+        'null'
       else
         'object'
       end
