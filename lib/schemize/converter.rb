@@ -29,6 +29,8 @@ module Schemize
         'string'
       when Numeric
         'integer'
+      when TrueClass, FalseClass
+        'boolean'
       when nil
         'null'
       else
