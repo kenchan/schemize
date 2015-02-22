@@ -1,6 +1,7 @@
 require 'test/unit'
 require 'schemize'
 require 'json'
+require 'pry'
 
 class ConverterTest < Test::Unit::TestCase
   def setup
