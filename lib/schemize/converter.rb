@@ -1,5 +1,6 @@
 require 'json'
 require 'yaml'
+require 'active_support'
 
 module Schemize
   class Converter
@@ -8,7 +9,7 @@ module Schemize
       when Array
         {
           'type' => 'array',
-          'items' => json.inject({}) {|h, i| h.merge(perform(i)) }
+          'items' => json.inject({}) {|h, i| h.deep_merge(perform(i)) }
         }
       when Hash
         {

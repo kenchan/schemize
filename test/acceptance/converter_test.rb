@@ -88,7 +88,7 @@ class ConverterTest < Test::Unit::TestCase
             "firstName": "Hanako",
             "lastName":  "YAMADA",
             "age": 23,
-            "friend_ids": [2, 3]
+            "friend_ids": []
           }
         ]
       }
